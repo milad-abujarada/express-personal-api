@@ -2,6 +2,7 @@
 var express = require('express'),
     app = express();
 
+
 // parse incoming urlencoded form data
 // and populate the req.body object
 var bodyParser = require('body-parser');
@@ -38,14 +39,14 @@ app.get('/', function homepage(req, res) {
 app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
-    woops_i_has_forgot_to_document_all_my_endpoints: true, // CHANGE ME ;)
+    //woops_i_has_forgot_to_document_all_my_endpoints: false, // CHANGE ME ;)
     message: "Welcome to my personal api! Here's what you need to know!",
     documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    base_url: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    base_url: "https://protected-falls-36796.herokuapp.com/", // CHANGE ME
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
+      {method: "GET", path: "/api/profile", description: "This endpoints will provide you with an idea of how awesome is me :)"}, // CHANGE ME
+      {method: "POST", path: "/api/vacation", description: "Vacation spots you think I should visit"} // CHANGE ME
     ]
   })
 });
