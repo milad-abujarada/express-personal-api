@@ -44,9 +44,13 @@ app.get('/api', function api_index(req, res) {
     documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
     base_url: "https://protected-falls-36796.herokuapp.com/", // CHANGE ME
     endpoints: [
-      {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "This endpoints will provide you with an idea of how awesome is me :)"}, // CHANGE ME
-      {method: "POST", path: "/api/vacation", description: "Vacation spots you think I should visit"} // CHANGE ME
+      {method: "GET", path: "/api", description: "Describes all available endpoints."},
+      {method: "GET", path: "/api/profile", description: "This endpoints will provide you with an idea of how awesome is me :)."}, // CHANGE ME
+      {method: "GET", path: "/api/showVacations", description: "Shows all countries I visited."},
+      {method: "GET", path: "/api/vacationInfo/:id", description: "Shows information about a single vacation spot. Note: is is the name of the vacation spot."},
+      {method: "POST", path: "/api/vacation", description: "Adds a vacation spot."}, // CHANGE ME
+      {method: "PUT", path: "/api/vacation/:id", description: "Updates a vacation information. Note: is is the name of the vacation spot"},
+      {method: "DELETE", path: "/api/vacation/:id", description: "Deletes a vacation information. Note: is is the name of the vacation spot"}
     ]
   })
 });
