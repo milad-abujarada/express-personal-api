@@ -51,7 +51,7 @@ app.get('/api', function api_index(req, res) {
   })
 });
 
-app.get('/api/profile', function(){
+app.get('/api/profile', function(req, res){
   let Milad = {
     name: "Milad Abujarada",
     github_link: "https://github.com/milad-abujarada",
