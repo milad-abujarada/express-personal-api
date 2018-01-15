@@ -51,6 +51,20 @@ app.get('/api', function api_index(req, res) {
   })
 });
 
+app.get('/api/profile', function(){
+  let Milad = {
+    name: "Milad Abujarada",
+    github_link: "https://github.com/milad-abujarada",
+    github_profile_image: "https://avatars2.githubusercontent.com/u/33275486?s=400&u=e23c60cb7249cfdf19f273152b89517b2a3d5dac&v=4",
+    current_city: "Denver",
+    pets: [
+      {name: "Nemro", type: "cat"},
+      {name: "Misha", type: "cat"}
+    ]
+  };
+  res.json(Milad)
+})
+
 /**********
  * SERVER *
  **********/
