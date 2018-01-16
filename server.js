@@ -103,7 +103,7 @@ app.get('/api/vacationInfo/:id', function(req, res){
 });
 
 app.get('/api/removeVacation', function(req, res){
-  res.sendFile(__dirname + '/views/removevacation.html');
+  res.sendFile(__dirname + '/views/removeVacation.html');
 });
 
 app.delete('/api/removeVacation', function(req, res){
