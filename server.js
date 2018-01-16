@@ -2,7 +2,7 @@
 var express = require('express'),
     app = express();
 
-
+var Vacation = require("./models/vacation");
 // parse incoming urlencoded form data
 // and populate the req.body object
 var bodyParser = require('body-parser');
@@ -12,7 +12,11 @@ app.use(bodyParser.json());
 /************
  * DATABASE *
  ************/
-
+const mongoose = require('mongoose');
+mongoose.connect( process.env.MONGODB_URI || 
+                  process.env.MONGOLAB_URI || 
+                  process.env.MONGOHQ_URL || 
+                  "mongodb://localhost/personal-api");
 // var db = require('./models');
 
 /**********
@@ -39,18 +43,18 @@ app.get('/', function homepage(req, res) {
 app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
-    //woops_i_has_forgot_to_document_all_my_endpoints: false, // CHANGE ME ;)
+    //woops_i_has_forgot_to_document_all_my_endpoints: false, ;)
     message: "Welcome to my personal api! Here's what you need to know!",
     documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    base_url: "https://protected-falls-36796.herokuapp.com/", // CHANGE ME
+    base_url: "https://protected-falls-36796.herokuapp.com/", 
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints."},
-      {method: "GET", path: "/api/profile", description: "This endpoints will provide you with an idea of how awesome is me :)."}, // CHANGE ME
+      {method: "GET", path: "/api/profile", description: "This endpoints will provide you with an idea of how awesome is me :)."}, 
       {method: "GET", path: "/api/showVacations", description: "Shows all countries I visited."},
-      {method: "GET", path: "/api/vacationInfo/:id", description: "Shows information about a single vacation spot. Note: is is the name of the vacation spot."},
-      {method: "POST", path: "/api/vacation", description: "Adds a vacation spot."}, // CHANGE ME
-      {method: "PUT", path: "/api/vacation/:id", description: "Updates a vacation information. Note: is is the name of the vacation spot"},
-      {method: "DELETE", path: "/api/vacation/:id", description: "Deletes a vacation information. Note: is is the name of the vacation spot"}
+      {method: "GET", path: "/api/vacationInfo/:id", description: "Shows information about a single vacation spot. Note: id is the name of the vacation spot."},
+      {method: "GET", path: "/api/vacation", description: "Adds a vacation spot. Note: this endpoint calls POST /api/vacation endpoint after you submit the information you wanna save."}, 
+      {method: "PUT", path: "/api/vacation/:id", description: "Updates a vacation information. Note: id is the name of the vacation spot"},
+      {method: "GET", path: "/api/removeVacation", description: "Deletes a vacation information. Note: id is the name of the vacation spot. Note: this endpoint calls DELETE /api/removeVacation"}
     ]
   })
 });
@@ -69,6 +73,45 @@ app.get('/api/profile', function(req, res){
   res.json(Milad)
 })
 
+app.get('/api/vacation', function(req, res){
+  res.sendFile(__dirname + "/views/addVacation.html")
+});
+
+app.post('/api/vacation', function(req, res){
+  let newVacation = new Vacation();
+  newVacation.vacationPlace = req.body.vacationPlace;
+  newVacation.description = req.body.description;
+  newVacation.save(function(err){
+    if(!err){
+      res.sendFile(__dirname + "/views/success.html")
+    };
+  });
+});
+
+app.get('/api/showVacations', function(req, res){
+  let vacations = new Vacation();
+  vacations.collection.find({},{vacationPlace:1, _id:0, __v:0}).toArray(function(err, vacs){
+    res.send(vacs);
+  });
+});
+
+app.get('/api/vacationInfo/:id', function(req, res){
+  let vacation = new Vacation();
+  vacation.collection.findOne({vacationPlace:req.params.id}, {_id:0, __v:0}, function(err, result){
+    res.send(result);
+  });
+});
+
+app.get('/api/removeVacation', function(req, res){
+  res.sendFile(__dirname + '/views/removevacation.html');
+});
+
+app.delete('/api/removeVacation', function(req, res){
+  let vacation = new Vacation();
+  vacation.collection.remove({vacationPlace:req.body.vacationPlace}, function(err){
+      res.send("done");
+  });
+});
 /**********
  * SERVER *
  **********/

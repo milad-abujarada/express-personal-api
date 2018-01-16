@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Remove a vacation</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<input type="text" name="vacationPlace" placeholder="Vacation place you want to remove" id="vacationPlace">
+	<input type="button"  value="submit" id="button">
+	<script type="text/javascript">
+		$("#button").on("click", function(){
+			$.ajax({
+				method:"delete",
+				url: "/api/removeVacation",
+				data: {vacationPlace:$("#vacationPlace").val()}
+			}).done(function(res){
+				console.log(res);
+				$("#button").remove();
+				$("#vacationPlace").remove();
+				$("<div>done</div>").appendTo("body");
+			});
+		});
+	</script>
+</body>
+</html>
