@@ -54,7 +54,7 @@ app.get('/api', function api_index(req, res) {
       {method: "GET", path: "/api/vacationInfo/:id", description: "Shows information about a single vacation spot. Note: id is the name of the vacation spot."},
       {method: "GET", path: "/api/vacation", description: "Adds a vacation spot. Note: this endpoint calls POST /api/vacation endpoint after you submit the information you wanna save."}, 
       {method: "PUT", path: "/api/vacation/:id", description: "Updates a vacation information. Note: id is the name of the vacation spot"},
-      {method: "GET", path: "/api/removeVacation", description: "Deletes a vacation information. Note: id is the name of the vacation spot. Note: this endpoint calls DELETE /api/removeVacation"}
+      {method: "GET", path: "/api/removeVacation", description: "Deletes a vacation information. Note: id is the name of the vacation spot. This endpoint calls DELETE /api/removeVacation after you submit the information you wanna delete"}
     ]
   })
 });
