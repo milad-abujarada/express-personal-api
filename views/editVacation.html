@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit a vacation</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<input type="text" name="oldVacationPlace" placeholder="Vacation place you want to Edit" id="oldVacationPlace">
+	<input type="text" name="newVacationPlace" placeholder="New vacation place name" id="newVacationPlace">
+	<textarea name="description" placeholder="new description" id="description"></textarea>
+	<input type="button"  value="submit" id="button">
+	<script type="text/javascript">
+		$("#button").on("click", function(){
+			$.ajax({
+				method:"put",
+				url: "/api/editVacation",
+				data: {
+					oldVacationPlace:$("#oldVacationPlace").val(),
+					newVacationPlace: $("#newVacationPlace").val(),
+					description: $("#description").val()
+				}
+			}).done(function(res){
+				console.log(res);
+				$("#button").remove();
+				$("#oldVacationPlace").remove();
+				$("#newVacationPlace").remove();
+				$("#description").remove();
+				$("<div></div>").append(res).appendTo("body");
+			});
+		});
+	</script>
+</body>
+</html>

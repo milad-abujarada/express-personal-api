@@ -91,14 +91,14 @@ app.post('/api/vacation', function(req, res){
 app.get('/api/showVacations', function(req, res){
   let vacations = new Vacation();
   vacations.collection.find({},{_id:0, __v:0, description:0}).toArray(function(err, vacs){
-    res.send(vacs);
+    res.json(vacs);
   });
 });
 
 app.get('/api/vacationInfo/:id', function(req, res){
   let vacation = new Vacation();
   vacation.collection.findOne({vacationPlace:req.params.id}, {_id:0, __v:0}, function(err, result){
-    res.send(result);
+    res.json(result);
   });
 });
 
@@ -106,10 +106,23 @@ app.get('/api/removeVacation', function(req, res){
   res.sendFile(__dirname + '/views/removeVacation.html');
 });
 
-app.delete('/api/removeVacation', function(req, res){
+app.delete('/api/removeVacation', function(req, response){
   let vacation = new Vacation();
-  vacation.collection.remove({vacationPlace:req.body.vacationPlace}, function(err){
-      res.send("done");
+  vacation.collection.remove({vacationPlace:req.body.vacationPlace}, function(err, result){
+      let res = JSON.stringify({nDeleted:result.result.n});
+      response.send(res);
+  });
+});
+
+app.get('/api/editVacation', function(req,res){
+  res.sendFile(__dirname + '/views/editVacation.html');
+});
+
+app.put('/api/editVacation', function(req, response){
+  let vacation = new Vacation();
+  vacation.collection.findOneAndUpdate({vacationPlace:req.body.oldVacationPlace}, {vacationPlace:req.body.newVacationPlace, description:req.body.description}, function(err, result){
+    let res = JSON.stringify(result);
+    response.json(res);
   });
 });
 /**********

@@ -14,10 +14,9 @@
 				url: "/api/removeVacation",
 				data: {vacationPlace:$("#vacationPlace").val()}
 			}).done(function(res){
-				console.log(res);
 				$("#button").remove();
 				$("#vacationPlace").remove();
-				$("<div>done</div>").appendTo("body");
+				$("<div></div>").append(res).appendTo("body");
 			});
 		});
 	</script>
