@@ -90,7 +90,7 @@ app.post('/api/vacation', function(req, res){
 
 app.get('/api/showVacations', function(req, res){
   let vacations = new Vacation();
-  vacations.collection.find({},{vacationPlace:1, _id:0, __v:0}).toArray(function(err, vacs){
+  vacations.collection.find({},{_id:0, __v:0, description:0}).toArray(function(err, vacs){
     res.send(vacs);
   });
 });
